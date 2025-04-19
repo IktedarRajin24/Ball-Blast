@@ -9,8 +9,8 @@ public class Cannon : MonoBehaviour
     JointMotor2D motor;
 
     [SerializeField] float CannonSpeed;
-    bool isMoving = false;
-
+    bool isGameOver;
+    bool isMoving;
     Vector2 pos;
     float screenBounds;
     float velocityX;
@@ -25,14 +25,15 @@ public class Cannon : MonoBehaviour
         motor = wheels[0].motor;
 
         screenBounds = GameManager.instance.screenWidth - 0.56f;
+        
     }
 
     void Update()
     {
         //Check player input ( hand or mouse drag)
-        isMoving = Input.GetMouseButton(0);
-
-        if (isMoving)
+        isMoving = GameManager.instance.isMoving;
+        isGameOver = GameManager.instance.isGameOver;
+        if (!isGameOver && isMoving)
         {
             pos.x = cam.ScreenToWorldPoint(Input.mousePosition).x;
         }
@@ -40,8 +41,7 @@ public class Cannon : MonoBehaviour
 
     void FixedUpdate()
     {
-        //Move the cannon
-        if (isMoving)
+        if (isMoving && !isGameOver)
         {
             rb.MovePosition(Vector2.Lerp(rb.position, pos, CannonSpeed * Time.fixedDeltaTime));
 

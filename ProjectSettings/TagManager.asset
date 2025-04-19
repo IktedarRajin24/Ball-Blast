@@ -5,6 +5,10 @@ TagManager:
   serializedVersion: 3
   tags:
   - missile
+  - meteor
+  - cannon
+  - wall
+  - ground
   layers:
   - Default
   - TransparentFX

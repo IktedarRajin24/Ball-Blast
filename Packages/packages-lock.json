@@ -1,5 +1,12 @@
 {
   "dependencies": {
+    "com.ulaph.mobile-haptics-for-unity": {
+      "version": "https://github.com/ulaph/MobileHapticsForUnity.git?path=Assets/MobileHapticsForUnity",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "29ffc7dd3f3199bcfb95410386e9de6d247994fd"
+    },
     "com.unity.2d.animation": {
       "version": "10.1.4",
       "depth": 1,

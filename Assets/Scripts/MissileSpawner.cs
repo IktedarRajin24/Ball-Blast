@@ -3,10 +3,13 @@ using UnityEngine;
 
 public class MissileSpawner : MonoBehaviour
 {
+    public static MissileSpawner Instance;
     Queue<GameObject> missileQueue;
 
     [SerializeField] GameObject missilePrefab;
     [SerializeField] int missileCount;
+    [SerializeField] ParticleSystem cannonParticleSystem;
+    [SerializeField] AudioSource firingAudio;
 
     [Space]
     [SerializeField] float missileSpeed = 0.3f;
@@ -14,7 +17,16 @@ public class MissileSpawner : MonoBehaviour
 
     GameObject missile;
     float time = 0f;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    bool isMoving;
+
+    private void Awake()
+    {
+        if(Instance == null)
+        {
+            Instance = this;
+        }
+    }
+
     void Start()
     {
         Debug.Log(transform.parent.position.x);
@@ -25,11 +37,18 @@ public class MissileSpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        isMoving = GameManager.instance.isMoving;
+        if (GameManager.instance != null && GameManager.instance.isGameOver)
+        {
+            return; 
+        }
         time += Time.deltaTime;
-        if (time >= delay) { 
+        if (time >= delay && isMoving) { 
             time = 0f;
             missile = SpawnMissile(transform.position);
             missile.GetComponent<Rigidbody2D>().linearVelocity = Vector2.up * missileSpeed;
+            cannonParticleSystem.Play();
+            firingAudio.Play();
         }
     }
 

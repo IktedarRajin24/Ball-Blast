@@ -1,69 +1,47 @@
-using TMPro;
+using System.Collections;
 using UnityEngine;
 
 public class MeteorSpawner : MonoBehaviour
 {
-    [SerializeField] Rigidbody2D rb;
-    [SerializeField] int health;
+    public static MeteorSpawner Instance;
 
-    [SerializeField] TMP_Text textHealth;
-    [SerializeField] float jumpForce;
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    [SerializeField] GameObject[] meteorPrefabs;
+    [SerializeField] int meteorCount;
+    [SerializeField] float spawnDelay;
+
+    GameObject[] meteors;
+
+    bool isMoving;
+
+    private void Awake()
+    {
+        Instance = this;
+    }
     void Start()
     {
-        
+        PrepareMeteors();
+        StartCoroutine(SpawnMeteors());
+        isMoving = GameManager.instance.isMoving;
     }
 
-    public void Die()
+    IEnumerator SpawnMeteors()
     {
-        Destroy(gameObject);
-    }
-
-    public void TakeDamage(int damage)
-    {
-        if(health > 1)
+        while (true)
         {
-            health -= damage;
-        }
-        else
-        {
-            Die();
-        }
-        UpdateHealthUI();
-    }
-
-    public void UpdateHealthUI()
-    {
-        textHealth.text = health.ToString();
-    }
-
-    private void OnTriggerEnter2D(Collider2D collision)
-    {
-        if (collision.tag.Equals("cannon"))
-        {
-            Debug.Log("Game over");
-        }else if (collision.tag.Equals("missile"))
-        {
-            TakeDamage(1);
-        }else if (collision.tag.Equals("wall"))
-        {
-            float posX = transform.position.x;
-            if (posX > 0) {
-
-            }
-            else
-            {
-
-            }
-        }else if (collision.tag.Equals("ground"))
-        {
-
+            GameObject meteor = Instantiate(meteorPrefabs[Random.Range(0, meteorPrefabs.Length)], transform);
+            meteor.GetComponent<Meteor>().isResultOfFission = false;
+            yield return new WaitForSeconds(spawnDelay);
         }
     }
-
-    // Update is called once per frame
-    void Update()
+    void PrepareMeteors()
     {
-        
+        meteors = new GameObject[meteorCount];
+        int prefabCount = meteorPrefabs.Length;
+        for (int i = 0; i < meteorCount; i++)
+        {
+            meteors[i] = Instantiate(meteorPrefabs[Random.Range(0, prefabCount)], transform);
+            meteors[i].GetComponent<Meteor>().isResultOfFission = false;
+            meteors[i].SetActive(false);
+        }
     }
 }
