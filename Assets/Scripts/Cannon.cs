@@ -18,12 +18,9 @@ public class Cannon : MonoBehaviour
     void Start()
     {
         cam = Camera.main;
-
         rb = GetComponent<Rigidbody2D>();
         pos = rb.position;
-
         motor = wheels[0].motor;
-
         screenBounds = GameManager.instance.screenWidth - 0.56f;
         
     }

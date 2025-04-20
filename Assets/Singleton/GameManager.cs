@@ -18,6 +18,10 @@ public class GameManager : MonoBehaviour
         screenWidth = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0f, 0f)).x;
     }
 
+    private void Start()
+    {
+        Application.targetFrameRate = 60;
+    }
     public void GameOver()
     {
         if (!isGameOver) {

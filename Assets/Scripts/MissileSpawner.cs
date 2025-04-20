@@ -29,7 +29,7 @@ public class MissileSpawner : MonoBehaviour
 
     void Start()
     {
-        Debug.Log(transform.parent.position.x);
+        Debug.Log(cannonParticleSystem);
         CreateMissile();
 
     }
