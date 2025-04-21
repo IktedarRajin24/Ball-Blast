@@ -1,24 +1,19 @@
 using System.Collections.Generic;
 using UnityEngine;
-
 public class MissileSpawner : MonoBehaviour
 {
     public static MissileSpawner Instance;
     Queue<GameObject> missileQueue;
-
     [SerializeField] GameObject missilePrefab;
     [SerializeField] int missileCount;
     [SerializeField] ParticleSystem cannonParticleSystem;
     [SerializeField] AudioSource firingAudio;
-
     [Space]
     [SerializeField] float missileSpeed = 0.3f;
     [SerializeField] float delay = 0.3f;
-
     GameObject missile;
     float time = 0f;
     bool isMoving;
-
     private void Awake()
     {
         if(Instance == null)
@@ -26,14 +21,11 @@ public class MissileSpawner : MonoBehaviour
             Instance = this;
         }
     }
-
     void Start()
     {
         Debug.Log(cannonParticleSystem);
         CreateMissile();
-
     }
-
     // Update is called once per frame
     void Update()
     {

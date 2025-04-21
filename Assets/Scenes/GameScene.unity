@@ -956,7 +956,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.38340664, y: 25.343126}
+  m_Offset: {x: -0.3834076, y: 46.12065}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -966,7 +966,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 37.653603, y: 1.8434944}
+  m_Size: {x: 37.653603, y: 3.9097595}
   m_EdgeRadius: 0
 --- !u!114 &397424328
 MonoBehaviour:
@@ -981,7 +981,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   missilePrefab: {fileID: 8782524686216752934, guid: 2dda28ebb72d4434ea28e61b324b2e33, type: 3}
-  missileCount: 10
+  missileCount: 20
   cannonParticleSystem: {fileID: 1540543421}
   firingAudio: {fileID: 397424329}
   missileSpeed: 8
@@ -2531,7 +2531,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -2.789, z: 0}
-  m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
+  m_LocalScale: {x: 0.17, y: 0.17, z: 0.17}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 397424324}

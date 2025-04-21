@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using MobileHapticsForUnity;
+using System.Collections;
 
 public class Meteor : MonoBehaviour
 {
@@ -11,10 +11,13 @@ public class Meteor : MonoBehaviour
     [SerializeField] protected TMP_Text textHealth;
     [SerializeField] protected float jumpForce;
     [SerializeField] protected ParticleSystem splitParticle;
+    [SerializeField] protected ParticleSystem dustParticle;
     [SerializeField] protected AudioSource destroyAudio;
+    [SerializeField] protected SpriteRenderer spriteRenderer;
 
     protected bool isShowing;
     protected float[] leftRigthBound = new float[2] {-1f, 1f};
+    protected Color originalColor;
 
     [HideInInspector] public bool isResultOfFission = true;
     void Start()
@@ -23,6 +26,11 @@ public class Meteor : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         isShowing = true;
         rb.gravityScale = 0f;
+        
+
+        if (spriteRenderer == null)
+            spriteRenderer = GetComponent<SpriteRenderer>();
+            originalColor = spriteRenderer.color;
 
         if (isResultOfFission)
         {
@@ -59,6 +67,7 @@ public class Meteor : MonoBehaviour
         if(health > 1)
         {
             health -= damage;
+            dustParticle.Play();
         }
         else
         {
@@ -66,6 +75,7 @@ public class Meteor : MonoBehaviour
         }
         ScoreManager.instance.SetScore(ScoreManager.instance.GetScore() + 1);
         UpdateHealthUI();
+        
     }
 
     protected void UpdateHealthUI()
@@ -84,6 +94,7 @@ public class Meteor : MonoBehaviour
             //Haptics.Impact(ImpactFeedbackStyle.Light);
             TakeDamage(1);
             MissileSpawner.Instance.DestroyMissile(collision.gameObject);
+            StartCoroutine(FlashWhite());
         }
         if (!isShowing && collision.tag.Equals("wall"))
         {
@@ -111,4 +122,10 @@ public class Meteor : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
+    private IEnumerator FlashWhite()
+    {
+        spriteRenderer.color = Color.white;
+        yield return new WaitForSeconds(0.12f); 
+        spriteRenderer.color = originalColor;
+    }
 }
